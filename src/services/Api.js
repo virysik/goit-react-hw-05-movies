@@ -22,3 +22,14 @@ export async function fetchOneMovieInfo(id) {
     console.log(err);
   }
 }
+
+export async function fetchMovieCast(id) {
+  try {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=en-US`,
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}

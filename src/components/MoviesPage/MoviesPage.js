@@ -1,5 +1,5 @@
 function MoviesPage() {
-  return <div>SearchInput</div>;
+  return <main>SearchInput</main>;
 }
 
 export default MoviesPage;

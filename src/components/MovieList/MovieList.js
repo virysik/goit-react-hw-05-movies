@@ -31,13 +31,7 @@ function MovieList() {
         <ul>
           {[...movies].map(({ id, title }) => (
             <li key={id}>
-              <Link
-                to={{
-                  pathname: `/movies/${id}`,
-                }}
-              >
-                {title}
-              </Link>
+              <Link to={`/movies/${id}`}>{title}</Link>
             </li>
           ))}
         </ul>

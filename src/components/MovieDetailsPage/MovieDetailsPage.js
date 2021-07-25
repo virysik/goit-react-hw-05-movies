@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+
+import { useParams, useRouteMatch } from 'react-router-dom';
+import AdditionalInfo from '../AdditionalInfo';
 import * as Api from '../../services/Api';
-import Cast from '../Cast';
-import Review from '../Reviews';
 
 function MovieDetailsPage() {
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState(null);
   const { movieId } = useParams();
+  const { path, url } = useRouteMatch();
 
   useEffect(() => {
     async function getMovieInfo() {
@@ -37,22 +38,22 @@ function MovieDetailsPage() {
       <button type="button">⬅️Go back</button>
       {movie ? (
         <>
-          <div>
-            <img src={movie.img} alt="desc" />
-          </div>
-          <div>
-            <h2>
-              {movie.title} {movie.year}
-            </h2>
-            <p>User Score: {movie.score}</p>
-            <h3>Overview</h3>
-            <p>{movie.overview}</p>
-            <h4>Genres</h4>
-            <p>{movie.genres}</p>
-          </div>
-          <p>Additional Information</p>
-          <Cast />
-          <Review />
+          <main>
+            <div>
+              <img src={movie.img} alt="desc" />
+            </div>
+            <div>
+              <h2>
+                {movie.title} {movie.year}
+              </h2>
+              <p>User Score: {movie.score}</p>
+              <h3>Overview</h3>
+              <p>{movie.overview}</p>
+              <h4>Genres</h4>
+              <p>{movie.genres}</p>
+            </div>
+          </main>
+          <AdditionalInfo path={path} url={url} id={movieId} />
         </>
       ) : (
         <p>{error}</p>
