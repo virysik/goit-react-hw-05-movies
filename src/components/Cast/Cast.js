@@ -9,7 +9,7 @@ function Cast({ id }) {
     async function getCastInfo(id) {
       try {
         const { cast } = await Api.fetchMovieCast(id);
-        console.log(`cast`, cast);
+
         setCastInfo(
           cast.map(castElem => {
             return {
