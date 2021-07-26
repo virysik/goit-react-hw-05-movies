@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import * as Api from '../../services/Api';
 import defaultImg from '../../images/defaultPerson.jpg';
 
 function Cast({ id }) {
   const [castInfo, setCastInfo] = useState(null);
+  const { movieId } = useParams();
 
   useEffect(() => {
-    async function getCastInfo(id) {
+    async function getCastInfo(movieId) {
       try {
-        const { cast } = await Api.fetchMovieCast(id);
+        const { cast } = await Api.fetchMovieCast(movieId);
 
         setCastInfo(
           cast.map(castElem => {
@@ -24,22 +26,23 @@ function Cast({ id }) {
         console.log(err);
       }
     }
-    getCastInfo(id);
-  }, [id]);
+    getCastInfo(movieId);
+  }, [movieId]);
 
   return (
-    <ul>
-      {castInfo &&
-        castInfo.map(({ id, name, img, character }) => {
-          return (
+    <>
+      {castInfo && (
+        <ul>
+          {castInfo.map(({ id, name, img, character }) => (
             <li key={id}>
               <img src={img} alt={name} />
               <p>{name}</p>
               <p>Character: {character}</p>
             </li>
-          );
-        })}
-    </ul>
+          ))}
+        </ul>
+      )}
+    </>
   );
 }
 

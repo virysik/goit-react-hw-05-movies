@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-
-import { useParams, useRouteMatch } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import AdditionalInfo from '../AdditionalInfo';
 import * as Api from '../../services/Api';
 
@@ -8,7 +7,6 @@ function MovieDetailsPage() {
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState(null);
   const { movieId } = useParams();
-  const { path, url } = useRouteMatch();
 
   useEffect(() => {
     async function getMovieInfo() {
@@ -39,21 +37,23 @@ function MovieDetailsPage() {
       {movie ? (
         <>
           <main>
-            <div>
-              <img src={movie.img} alt="desc" />
-            </div>
-            <div>
-              <h2>
-                {movie.title} {movie.year}
-              </h2>
-              <p>User Score: {movie.score}</p>
-              <h3>Overview</h3>
-              <p>{movie.overview}</p>
-              <h4>Genres</h4>
-              <p>{movie.genres}</p>
-            </div>
+            <section>
+              <div>
+                <img src={movie.img} alt="desc" />
+              </div>
+              <div>
+                <h2>
+                  {movie.title} {movie.year}
+                </h2>
+                <p>User Score: {movie.score}</p>
+                <h3>Overview</h3>
+                <p>{movie.overview}</p>
+                <h4>Genres</h4>
+                <p>{movie.genres}</p>
+              </div>
+            </section>
+            <AdditionalInfo />
           </main>
-          <AdditionalInfo path={path} url={url} id={movieId} />
         </>
       ) : (
         <p>{error}</p>

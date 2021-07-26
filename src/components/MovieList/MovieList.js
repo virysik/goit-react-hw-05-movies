@@ -8,9 +8,10 @@ function MovieList() {
   useEffect(() => {
     async function fetchMovieList() {
       try {
-        const data = await Api.fetchMovies();
+        const { results } = await Api.fetchMovies();
+
         setMovies(
-          [...data.results].map(movie => {
+          results.map(movie => {
             return {
               ...movie,
               title: movie.title ? movie.title : movie.name,
@@ -29,7 +30,7 @@ function MovieList() {
     <>
       {movies && (
         <ul>
-          {[...movies].map(({ id, title }) => (
+          {movies.map(({ id, title }) => (
             <li key={id}>
               <Link to={`/movies/${id}`}>{title}</Link>
             </li>
