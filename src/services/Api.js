@@ -32,3 +32,13 @@ export async function fetchMovieCast(id) {
     console.log(err);
   }
 }
+
+export async function fetchMovieReviews(id) {
+  const params = `/movie/${id}/reviews?api_key=${apiKey}&language=en-US&page=1`;
+  try {
+    const { data } = await axios.get(params);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}

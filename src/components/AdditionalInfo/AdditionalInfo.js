@@ -21,7 +21,9 @@ function AdditionalInfo({ url, path, id }) {
       </section>
       <Switch>
         <Route path={`${path}/cast`}>{showCast && <Cast id={id} />}</Route>
-        <Route path={`${path}/reviews`}>{showReview && <Review />}</Route>
+        <Route path={`${path}/reviews`}>
+          {showReview && <Review id={id} />}
+        </Route>
       </Switch>
     </>
   );

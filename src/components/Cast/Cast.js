@@ -26,6 +26,7 @@ function Cast({ id }) {
     }
     getCastInfo(id);
   }, [id]);
+
   return (
     <ul>
       {castInfo &&
