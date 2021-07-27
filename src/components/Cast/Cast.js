@@ -3,14 +3,21 @@ import { useParams } from 'react-router-dom';
 import * as Api from '../../services/Api';
 import defaultImg from '../../images/defaultPerson.jpg';
 
-function Cast({ id }) {
+function Cast() {
   const [castInfo, setCastInfo] = useState(null);
+  const [castText, setCastText] = useState('');
   const { movieId } = useParams();
 
   useEffect(() => {
     async function getCastInfo(movieId) {
       try {
         const { cast } = await Api.fetchMovieCast(movieId);
+
+        if (!cast.length) {
+          return setCastText(
+            `We don't have any cast information for this movie.`,
+          );
+        }
 
         setCastInfo(
           cast.map(castElem => {
@@ -31,16 +38,18 @@ function Cast({ id }) {
 
   return (
     <>
-      {castInfo && (
+      {castInfo ? (
         <ul>
-          {castInfo.map(({ id, name, img, character }) => (
-            <li key={id}>
+          {castInfo.map(({ credit_id, name, img, character }) => (
+            <li key={credit_id}>
               <img src={img} alt={name} />
               <p>{name}</p>
               <p>Character: {character}</p>
             </li>
           ))}
         </ul>
+      ) : (
+        <p>{castText}</p>
       )}
     </>
   );

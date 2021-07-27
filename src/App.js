@@ -1,4 +1,4 @@
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import HomePage from './components/HomePage';
 import MoviesPage from './components/MoviesPage';
@@ -18,6 +18,7 @@ function App() {
         <Route path="/movies/:movieId">
           <MovieDetailsPage />
         </Route>
+        <Redirect to="/" />
       </Switch>
     </>
   );

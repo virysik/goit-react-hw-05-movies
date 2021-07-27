@@ -27,7 +27,7 @@ function Reviews() {
 
   return (
     <>
-      {reviews && (
+      {reviews ? (
         <ul>
           {reviews.map(review => (
             <li key={review.id}>
@@ -36,9 +36,9 @@ function Reviews() {
             </li>
           ))}
         </ul>
+      ) : (
+        <p>{reviewText}</p>
       )}
-
-      {reviewText && <p>{reviewText}</p>}
     </>
   );
 }

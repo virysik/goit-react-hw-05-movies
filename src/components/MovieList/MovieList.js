@@ -1,23 +1,21 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import * as Api from '../../services/Api';
 
 function MovieList() {
   const [movies, setMovies] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     async function fetchMovieList() {
       try {
         const { results } = await Api.fetchMovies();
 
-        setMovies(
-          results.map(movie => {
-            return {
-              ...movie,
-              title: movie.title ? movie.title : movie.name,
-            };
-          }),
-        );
+        if (!results.length) {
+          return alert('There is no movies for today');
+        }
+        setMovies(results);
       } catch (err) {
         console.log(err);
       }
@@ -32,7 +30,19 @@ function MovieList() {
         <ul>
           {movies.map(({ id, title }) => (
             <li key={id}>
-              <Link to={`/movies/${id}`}>{title}</Link>
+              <Link
+                to={{
+                  pathname: `/movies/${id}`,
+                  state: {
+                    from: {
+                      location,
+                      label: 'Back to HomePage',
+                    },
+                  },
+                }}
+              >
+                {title}
+              </Link>
             </li>
           ))}
         </ul>

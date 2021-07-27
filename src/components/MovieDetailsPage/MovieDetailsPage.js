@@ -1,40 +1,37 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import AdditionalInfo from '../AdditionalInfo';
 import * as Api from '../../services/Api';
 
 function MovieDetailsPage() {
   const [movie, setMovie] = useState(null);
-  const [error, setError] = useState(null);
   const { movieId } = useParams();
+  const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     async function getMovieInfo() {
       try {
         const data = await Api.fetchOneMovieInfo(movieId);
-
-        setMovie({
-          ...data,
-          img: `https://image.tmdb.org/t/p/w500${data.poster_path}`,
-          year: data.release_date
-            ? '(' + data.release_date.split('-').slice(0, 1) + ')'
-            : '',
-          score: data.vote_average ? Math.round(data.vote_average) + '%' : '',
-          genres: [...data.genres].map(genre => genre.name + ' '),
-        });
+        setMovie(data);
       } catch (err) {
         console.log(err);
-        setError('The resource you requested could not be found.');
       }
     }
 
     getMovieInfo();
   }, [movieId]);
 
+  function onGoBack() {
+    history.push(location?.state?.from?.location ?? '/');
+  }
+
   return (
     <>
-      <button type="button">⬅️Go back</button>
-      {movie ? (
+      <button type="button" onClick={onGoBack}>
+        ⬅️Go back
+      </button>
+      {movie && (
         <>
           <main>
             <section>
@@ -55,8 +52,6 @@ function MovieDetailsPage() {
             <AdditionalInfo />
           </main>
         </>
-      ) : (
-        <p>{error}</p>
       )}
     </>
   );
