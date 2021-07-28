@@ -1,13 +1,23 @@
-import { useState, useEffect } from 'react';
-import { useParams, useHistory, useLocation } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import {
+  Route,
+  useParams,
+  useHistory,
+  useLocation,
+  useRouteMatch,
+} from 'react-router-dom';
 import AdditionalInfo from '../AdditionalInfo';
+import Cast from '../Cast';
+import Reviews from '../Reviews';
 import * as Api from '../../services/Api';
 
 function MovieDetailsPage() {
   const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
+  const { path } = useRouteMatch();
   const history = useHistory();
   const location = useLocation();
+  const routerState = useRef(location?.state?.from);
 
   useEffect(() => {
     async function getMovieInfo() {
@@ -23,37 +33,42 @@ function MovieDetailsPage() {
   }, [movieId]);
 
   function onGoBack() {
-    history.push(location?.state?.from?.location ?? '/');
+    history.push(routerState.current.location ?? '/');
   }
 
   return (
-    <>
+    <main>
       <button type="button" onClick={onGoBack}>
         ⬅️Go back
       </button>
       {movie && (
         <>
-          <main>
-            <section>
-              <div>
-                <img src={movie.img} alt="desc" />
-              </div>
-              <div>
-                <h2>
-                  {movie.title} {movie.year}
-                </h2>
-                <p>User Score: {movie.score}</p>
-                <h3>Overview</h3>
-                <p>{movie.overview}</p>
-                <h4>Genres</h4>
-                <p>{movie.genres}</p>
-              </div>
-            </section>
-            <AdditionalInfo />
-          </main>
+          <section>
+            <div>
+              <img src={movie.img} alt="desc" />
+            </div>
+            <div>
+              <h2>
+                {movie.title} {movie.year}
+              </h2>
+              <p>User Score: {movie.score}</p>
+              <h3>Overview</h3>
+              <p>{movie.overview}</p>
+              <h4>Genres</h4>
+              <p>{movie.genres}</p>
+            </div>
+          </section>
+          <AdditionalInfo />
         </>
       )}
-    </>
+
+      <Route path={`${path}/cast`}>
+        <Cast />
+      </Route>
+      <Route path={`${path}/reviews`}>
+        <Reviews />
+      </Route>
+    </main>
   );
 }
 
