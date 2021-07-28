@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import * as Api from '../../services/Api';
 import SearchForm from '../SearchForm';
+import MovieList from '../MovieList';
 
 function MoviesPage() {
-  const [requestedQuery, setRequestedQuery] = useState('');
   const [movies, setMovies] = useState(null);
+  const history = useHistory();
+  const location = useLocation();
+  const requestedQuery =
+    new URLSearchParams(location.search).get('query') ?? '';
 
   useEffect(() => {
     if (!requestedQuery) {
@@ -16,7 +20,7 @@ function MoviesPage() {
         const { results } = await Api.fetchRequestedMovies(requestedQuery);
 
         if (!results.length) {
-          return alert('Please enter a new query');
+          return;
         }
 
         setMovies(results);
@@ -29,21 +33,13 @@ function MoviesPage() {
   }, [requestedQuery]);
 
   function onFormSubmit(newQuery) {
-    setRequestedQuery(newQuery);
+    history.push({ ...location, search: `query=${newQuery}` });
   }
 
   return (
     <main>
       <SearchForm onSubmit={onFormSubmit} />
-      {movies && (
-        <ul>
-          {movies.map(({ id, title }) => (
-            <li key={id}>
-              <Link to={`/movies/${id}`}>{title}</Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      {movies && <MovieList movies={movies} />}
     </main>
   );
 }

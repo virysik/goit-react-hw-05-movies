@@ -10,6 +10,10 @@ function SearchForm({ onSubmit }) {
 
   function searchMovie(e) {
     e.preventDefault();
+
+    if (query.trim() === '') {
+      return alert('Please enter a query');
+    }
     onSubmit(query);
     setQuery('');
   }
@@ -21,6 +25,8 @@ function SearchForm({ onSubmit }) {
         type="text"
         name="query"
         value={query}
+        autoComplete="off"
+        autoFocus
       ></input>
       <button type="submit">Search</button>
     </form>
