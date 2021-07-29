@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Status } from '../../constants/reqStatus';
 import * as Api from '../../services/Api';
 
 function Reviews() {
   const [reviews, setReviews] = useState(null);
   const [reviewText, setReviewText] = useState('');
+  const [status, setStatus] = useState(Status.IDLE);
+  const [error, setError] = useState('');
   const { movieId } = useParams();
 
   useEffect(() => {
     async function getReviewsInfo(movieId) {
+      setStatus(Status.PENDING);
       try {
         const { results } = await Api.fetchMovieReviews(movieId);
 
@@ -17,30 +21,43 @@ function Reviews() {
         }
 
         setReviews(results);
+        setStatus(Status.RESOLVED);
       } catch (err) {
         console.log(err);
+        setStatus(Status.REJECTED);
+        setError(err.message);
       }
     }
 
     getReviewsInfo(movieId);
   }, [movieId]);
 
-  return (
-    <>
-      {reviews ? (
-        <ul>
-          {reviews.map(review => (
-            <li key={review.id}>
-              <h3>Author: {review.author}</h3>
-              <p>{review.content}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>{reviewText}</p>
-      )}
-    </>
-  );
+  if (status === Status.IDLE || Status.RESOLVED) {
+    return (
+      <>
+        {reviews ? (
+          <ul>
+            {reviews.map(review => (
+              <li key={review.id}>
+                <h3>Author: {review.author}</h3>
+                <p>{review.content}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>{reviewText}</p>
+        )}
+      </>
+    );
+  }
+
+  if (status === Status.PENDING) {
+    return <p>Loader...</p>;
+  }
+
+  if (status === Status.REJECTED) {
+    return <h2>{error.message}</h2>;
+  }
 }
 
 export default Reviews;

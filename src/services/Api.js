@@ -6,6 +6,9 @@ axios.defaults.baseURL = 'https://api.themoviedb.org/3';
 
 async function fetchParams(url = '') {
   const { data } = await axios.get(url);
+  if (!data) {
+    throw new Error('404 Not Found');
+  }
   return data;
 }
 
@@ -32,6 +35,11 @@ export function fetchRequestedMovies(query) {
 export async function fetchOneMovieInfo(id) {
   const params = `/movie/${id}?api_key=${apiKey}&language=en-US`;
   const { data } = await axios.get(params);
+
+  if (!data) {
+    throw new Error('404 Not Found');
+  }
+
   return {
     title: data.title ? data.title : '',
     overview: data.overview ? data.overview : '',
