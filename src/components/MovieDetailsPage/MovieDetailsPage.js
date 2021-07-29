@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import {
   Route,
   useParams,
@@ -7,9 +7,14 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 import AdditionalInfo from '../AdditionalInfo';
-import Cast from '../Cast';
-import Reviews from '../Reviews';
 import * as Api from '../../services/Api';
+
+const Cast = lazy(() =>
+  import('../Cast/Cast.js' /* webpackChunkName: "cast" */),
+);
+const Reviews = lazy(() =>
+  import('../Reviews/Reviews.js' /* webpackChunkName: "reviews" */),
+);
 
 function MovieDetailsPage() {
   const [movie, setMovie] = useState(null);
@@ -17,6 +22,7 @@ function MovieDetailsPage() {
   const { path } = useRouteMatch();
   const history = useHistory();
   const location = useLocation();
+
   const routerState = useRef(location?.state?.from);
 
   useEffect(() => {
@@ -33,7 +39,7 @@ function MovieDetailsPage() {
   }, [movieId]);
 
   function onGoBack() {
-    history.push(routerState.current.location ?? '/');
+    history.push(routerState.current?.location ?? '/');
   }
 
   return (
@@ -62,12 +68,14 @@ function MovieDetailsPage() {
         </>
       )}
 
-      <Route path={`${path}/cast`}>
-        <Cast />
-      </Route>
-      <Route path={`${path}/reviews`}>
-        <Reviews />
-      </Route>
+      <Suspense fallback={<p>Loading...</p>}>
+        <Route path={`${path}/cast`}>
+          <Cast />
+        </Route>
+        <Route path={`${path}/reviews`}>
+          <Reviews />
+        </Route>
+      </Suspense>
     </main>
   );
 }

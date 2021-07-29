@@ -12,7 +12,7 @@ function MovieItem({ id, title }) {
           state: {
             from: {
               location,
-              label: 'Back to HomePage',
+              label: 'Back to previous page',
             },
           },
         }}
