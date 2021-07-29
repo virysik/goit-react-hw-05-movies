@@ -1,4 +1,5 @@
 import MovieItem from '../MovieItem';
+import PropTypes from 'prop-types';
 
 function MovieList({ movies }) {
   return (
@@ -15,3 +16,7 @@ function MovieList({ movies }) {
 }
 
 export default MovieList;
+
+MovieList.propTypes = {
+  movies: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
