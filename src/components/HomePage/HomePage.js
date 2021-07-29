@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Status } from '../../constants/reqStatus';
+import toast, { Toaster } from 'react-hot-toast';
+import { GiLaserWarning } from 'react-icons/gi';
 import Spinner from '../Spinner';
 import * as Api from '../../services/Api';
 import MovieList from '../MovieList';
@@ -16,7 +18,9 @@ function HomePage() {
         const { results } = await Api.fetchMovies();
 
         if (!results.length) {
-          return alert('There are no movies for now. Please try again later');
+          return toast('There are no movies for now. Please try again later', {
+            icon: <GiLaserWarning />,
+          });
         }
 
         setMovies(results);
@@ -36,6 +40,7 @@ function HomePage() {
       <main>
         <h1>Trending today</h1>
         {movies && <MovieList movies={movies} />}
+        <Toaster />
       </main>
     );
   }

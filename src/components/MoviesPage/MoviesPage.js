@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Status } from '../../constants/reqStatus';
+import { GiLaserWarning } from 'react-icons/gi';
+import toast, { Toaster } from 'react-hot-toast';
 import Spinner from '../Spinner';
 import * as Api from '../../services/Api';
 import SearchForm from '../SearchForm';
@@ -25,8 +27,9 @@ function MoviesPage() {
         const { results } = await Api.fetchRequestedMovies(requestedQuery);
 
         if (!results.length) {
-          alert(
+          toast(
             `There are no movies about ${requestedQuery}. Please try another query.`,
+            { icon: <GiLaserWarning /> },
           );
           return setMovies(null);
         }
@@ -52,6 +55,7 @@ function MoviesPage() {
       <main>
         <SearchForm onSubmit={onFormSubmit} />
         {movies && <MovieList movies={movies} />}
+        <Toaster />
       </main>
     );
   }
