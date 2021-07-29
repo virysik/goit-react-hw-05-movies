@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Status } from '../../constants/reqStatus';
+import Spinner from '../Spinner';
 import * as Api from '../../services/Api';
 import MovieList from '../MovieList';
 
@@ -9,8 +10,8 @@ function HomePage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    setStatus(Status.PENDING);
     async function fetchMovieList() {
-      setStatus(Status.PENDING);
       try {
         const { results } = await Api.fetchMovies();
 
@@ -43,7 +44,7 @@ function HomePage() {
     return (
       <main>
         <h1>Trending today</h1>
-        <h2>Loader...</h2>
+        <Spinner />
       </main>
     );
   }

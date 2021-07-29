@@ -1,6 +1,7 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import Navigation from './components/Navigation';
+import Spinner from './components/Spinner';
 
 const HomePage = lazy(() =>
   import(
@@ -22,7 +23,7 @@ function App() {
   return (
     <>
       <Navigation />
-      <Suspense fallback={<h1>Loading...</h1>}>
+      <Suspense fallback={<Spinner />}>
         <Switch>
           <Route path="/" exact>
             <HomePage />

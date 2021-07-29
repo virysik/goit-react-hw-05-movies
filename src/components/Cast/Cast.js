@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Status } from '../../constants/reqStatus';
+import Spinner from '../Spinner';
 import * as Api from '../../services/Api';
 import defaultImg from '../../images/defaultPerson.jpg';
 
@@ -64,7 +65,7 @@ function Cast() {
   }
 
   if (status === Status.PENDING) {
-    return <p>Loader...</p>;
+    return <Spinner />;
   }
 
   if (status === Status.REJECTED) {

@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import { Status } from '../../constants/reqStatus';
 import AdditionalInfo from '../AdditionalInfo';
+import Spinner from '../Spinner';
 import * as Api from '../../services/Api';
 
 const Cast = lazy(() =>
@@ -76,7 +77,7 @@ function MovieDetailsPage() {
           </>
         )}
 
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<Spinner />}>
           <Route path={`${path}/cast`}>
             <Cast />
           </Route>
@@ -89,7 +90,7 @@ function MovieDetailsPage() {
   }
 
   if (status === Status.PENDING) {
-    return <p>Loader...</p>;
+    return <Spinner />;
   }
 
   if (status === Status.REJECTED) {

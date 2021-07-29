@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Status } from '../../constants/reqStatus';
+import Spinner from '../Spinner';
 import * as Api from '../../services/Api';
 import SearchForm from '../SearchForm';
 import MovieList from '../MovieList';
@@ -58,7 +59,7 @@ function MoviesPage() {
   if (status === Status.PENDING) {
     <main>
       <SearchForm onSubmit={onFormSubmit} />
-      <h2>Loading...</h2>
+      <Spinner />
     </main>;
   }
 
