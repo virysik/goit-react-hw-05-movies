@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { GiLaserWarning } from 'react-icons/gi';
+import { Input, Btn } from './SearchForm.styles';
 import PropTypes from 'prop-types';
 
 function SearchForm({ onSubmit }) {
@@ -26,15 +27,15 @@ function SearchForm({ onSubmit }) {
   return (
     <>
       <form onSubmit={searchMovie}>
-        <input
+        <Input
           onChange={handleInputChange}
           type="text"
           name="query"
           value={query}
           autoComplete="off"
           autoFocus
-        ></input>
-        <button type="submit">Search</button>
+        ></Input>
+        <Btn type="submit">Search</Btn>
       </form>
       <Toaster />
     </>

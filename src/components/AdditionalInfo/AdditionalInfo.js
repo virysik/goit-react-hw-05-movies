@@ -1,21 +1,29 @@
-import { useRouteMatch, Link } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
+import { BiRightArrowAlt } from 'react-icons/bi';
+import { Section, P, Li, NLink, Ul } from './AdditionalInfo.styles';
 
 function AdditionalInfo() {
   const { url } = useRouteMatch();
 
   return (
     <>
-      <section>
-        <p>Additional Information</p>
-        <ul>
-          <li>
-            <Link to={`${url}/cast`}>Cast</Link>
-          </li>
-          <li>
-            <Link to={`${url}/reviews`}>Reviews</Link>
-          </li>
-        </ul>
-      </section>
+      <Section>
+        <P>Additional Information</P>
+        <Ul>
+          <Li>
+            <NLink to={`${url}/cast`}>
+              <BiRightArrowAlt />
+              Cast
+            </NLink>
+          </Li>
+          <Li>
+            <NLink to={`${url}/reviews`}>
+              <BiRightArrowAlt />
+              Reviews
+            </NLink>
+          </Li>
+        </Ul>
+      </Section>
     </>
   );
 }

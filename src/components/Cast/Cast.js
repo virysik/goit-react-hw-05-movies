@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Status } from '../../constants/reqStatus';
+import { Ul, Li, Wrapper } from './Cast.styles';
 import Spinner from '../Spinner';
 import * as Api from '../../services/Api';
 import defaultImg from '../../images/defaultPerson.jpg';
@@ -48,15 +49,19 @@ function Cast() {
     return (
       <>
         {castInfo ? (
-          <ul>
+          <Ul>
             {castInfo.map(({ credit_id, name, img, character }) => (
-              <li key={credit_id}>
-                <img src={img} alt={name} />
-                <p>{name}</p>
-                <p>Character: {character}</p>
-              </li>
+              <Li key={credit_id}>
+                <img src={img} alt={name} width="300" />
+                <Wrapper>
+                  <p>{name}</p>
+                  <p>
+                    <em>Character:</em> {character}
+                  </p>
+                </Wrapper>
+              </Li>
             ))}
-          </ul>
+          </Ul>
         ) : (
           <p>{castText}</p>
         )}

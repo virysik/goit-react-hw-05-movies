@@ -7,6 +7,14 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 import { Status } from '../../constants/reqStatus';
+import {
+  Main,
+  Btn,
+  Section,
+  AboutWrapper,
+  Desc,
+} from './MovieDetailsPage.styles';
+import { AiOutlineDoubleLeft } from 'react-icons/ai';
 import AdditionalInfo from '../AdditionalInfo';
 import Spinner from '../Spinner';
 import * as Api from '../../services/Api';
@@ -52,27 +60,28 @@ function MovieDetailsPage() {
 
   if (status === Status.IDLE || Status.RESOLVED) {
     return (
-      <main>
-        <button type="button" onClick={onGoBack}>
-          ⬅️Go back
-        </button>
+      <Main>
+        <Btn type="Btn" onClick={onGoBack}>
+          <AiOutlineDoubleLeft />
+          Go back
+        </Btn>
         {movie && (
           <>
-            <section>
+            <Section>
               <div>
-                <img src={movie.img} alt="desc" />
+                <img src={movie.img} alt="desc" width="300" />
               </div>
-              <div>
+              <AboutWrapper>
                 <h2>
                   {movie.title} {movie.year}
                 </h2>
                 <p>User Score: {movie.score}</p>
                 <h3>Overview</h3>
-                <p>{movie.overview}</p>
+                <Desc>{movie.overview}</Desc>
                 <h4>Genres</h4>
                 <p>{movie.genres}</p>
-              </div>
-            </section>
+              </AboutWrapper>
+            </Section>
             <AdditionalInfo />
           </>
         )}
@@ -85,7 +94,7 @@ function MovieDetailsPage() {
             <Reviews />
           </Route>
         </Suspense>
-      </main>
+      </Main>
     );
   }
 

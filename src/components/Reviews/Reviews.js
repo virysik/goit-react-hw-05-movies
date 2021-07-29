@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Status } from '../../constants/reqStatus';
+import { Ul, P, Wrapper } from './Reviews.styles';
 import Spinner from '../Spinner';
 import * as Api from '../../services/Api';
 
@@ -35,20 +36,20 @@ function Reviews() {
 
   if (status === Status.IDLE || Status.RESOLVED) {
     return (
-      <>
+      <Wrapper>
         {reviews ? (
-          <ul>
+          <Ul>
             {reviews.map(review => (
               <li key={review.id}>
                 <h3>Author: {review.author}</h3>
-                <p>{review.content}</p>
+                <P>{review.content}</P>
               </li>
             ))}
-          </ul>
+          </Ul>
         ) : (
           <p>{reviewText}</p>
         )}
-      </>
+      </Wrapper>
     );
   }
 

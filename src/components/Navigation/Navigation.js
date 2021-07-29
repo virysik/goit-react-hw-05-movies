@@ -1,21 +1,21 @@
-import { NavLink } from 'react-router-dom';
+import { Header, Ul, Li, NLink } from './Navigation.styles';
 
 function Navigation() {
   return (
-    <header>
+    <Header>
       <nav>
-        <ul>
-          <li>
-            <NavLink to="/" exact>
+        <Ul>
+          <Li>
+            <NLink to="/" exact>
               Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/movies">Movies</NavLink>
-          </li>
-        </ul>
+            </NLink>
+          </Li>
+          <Li>
+            <NLink to="/movies">Movies</NLink>
+          </Li>
+        </Ul>
       </nav>
-    </header>
+    </Header>
   );
 }
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Status } from '../../constants/reqStatus';
 import { GiLaserWarning } from 'react-icons/gi';
+import { Main } from './MoviesPage.styles';
 import toast, { Toaster } from 'react-hot-toast';
 import Spinner from '../Spinner';
 import * as Api from '../../services/Api';
@@ -29,7 +30,7 @@ function MoviesPage() {
         if (!results.length) {
           toast(
             `There are no movies about ${requestedQuery}. Please try another query.`,
-            { icon: <GiLaserWarning /> },
+            { icon: <GiLaserWarning size="40px" /> },
           );
           return setMovies(null);
         }
@@ -52,26 +53,26 @@ function MoviesPage() {
 
   if (status === Status.IDLE || Status.RESOLVED) {
     return (
-      <main>
+      <Main>
         <SearchForm onSubmit={onFormSubmit} />
         {movies && <MovieList movies={movies} />}
         <Toaster />
-      </main>
+      </Main>
     );
   }
 
   if (status === Status.PENDING) {
-    <main>
+    <Main>
       <SearchForm onSubmit={onFormSubmit} />
       <Spinner />
-    </main>;
+    </Main>;
   }
 
   if (status === Status.REJECTED) {
-    <main>
+    <Main>
       <SearchForm onSubmit={onFormSubmit} />
       <h2>{error.message}</h2>
-    </main>;
+    </Main>;
   }
 }
 
