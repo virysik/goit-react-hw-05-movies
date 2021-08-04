@@ -4,10 +4,10 @@ import { Status } from '../../constants/reqStatus';
 import { GiLaserWarning } from 'react-icons/gi';
 import { Main } from './MoviesPage.styles';
 import toast, { Toaster } from 'react-hot-toast';
-import Spinner from '../Spinner';
+import Spinner from '../../components/Spinner';
 import * as Api from '../../services/Api';
-import SearchForm from '../SearchForm';
-import MovieList from '../MovieList';
+import SearchForm from '../../components/SearchForm';
+import MovieList from '../../components/MovieList';
 
 function MoviesPage() {
   const [movies, setMovies] = useState(null);

@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { Status } from '../../constants/reqStatus';
 import toast, { Toaster } from 'react-hot-toast';
 import { GiLaserWarning } from 'react-icons/gi';
-import Spinner from '../Spinner';
+import Spinner from '../../components/Spinner';
 import * as Api from '../../services/Api';
-import MovieList from '../MovieList';
+import MovieList from '../../components/MovieList';
 
 function HomePage() {
   const [movies, setMovies] = useState(null);

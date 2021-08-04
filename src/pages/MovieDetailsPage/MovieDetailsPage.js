@@ -15,15 +15,17 @@ import {
   Desc,
 } from './MovieDetailsPage.styles';
 import { AiOutlineDoubleLeft } from 'react-icons/ai';
-import AdditionalInfo from '../AdditionalInfo';
-import Spinner from '../Spinner';
+import AdditionalInfo from '../../components/AdditionalInfo';
+import Spinner from '../../components/Spinner';
 import * as Api from '../../services/Api';
 
 const Cast = lazy(() =>
-  import('../Cast/Cast.js' /* webpackChunkName: "cast" */),
+  import('../../components/Cast/Cast.js' /* webpackChunkName: "cast" */),
 );
 const Reviews = lazy(() =>
-  import('../Reviews/Reviews.js' /* webpackChunkName: "reviews" */),
+  import(
+    '../../components/Reviews/Reviews.js' /* webpackChunkName: "reviews" */
+  ),
 );
 
 function MovieDetailsPage() {

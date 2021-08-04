@@ -4,18 +4,16 @@ import Navigation from './components/Navigation';
 import Spinner from './components/Spinner';
 
 const HomePage = lazy(() =>
-  import(
-    './components/HomePage/HomePage.js' /* webpackChunkName: "home-page" */
-  ),
+  import('./pages/HomePage/HomePage.js' /* webpackChunkName: "home-page" */),
 );
 const MoviesPage = lazy(() =>
   import(
-    './components/MoviesPage/MoviesPage.js' /* webpackChunkName: "movies-page" */
+    './pages/MoviesPage/MoviesPage.js' /* webpackChunkName: "movies-page" */
   ),
 );
 const MovieDetailsPage = lazy(() =>
   import(
-    './components/MovieDetailsPage/MovieDetailsPage.js' /* webpackChunkName: "movie-details-page" */
+    './pages/MovieDetailsPage/MovieDetailsPage.js' /* webpackChunkName: "movie-details-page" */
   ),
 );
 
